@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Web Components</title>
+    </head>
+    <body>
+
+        <!-- ШАБЛОНЫ -->
+        <template>
+            <p id="nnn">Hello, World! (from template)</p>
+            <script src="test.js"></script>
+        </template>
+
+        <button id="add-button">Add Template</button>
+
+        <template id="header">
+            <h1>Header</h1>
+
+            <template id="body">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque enim facere facilis iste magni nam neque odio quis reiciendis tenetur. Dolore facilis illo laudantium molestiae nesciunt nostrum praesentium quia, similique.
+            </template>
+        </template>
+        <!-- ШАБЛОНЫ -->
+
+        <!-- КАСТОМНЫЕ ЭЛЕМЕНТЫ -->
+        <hello-component></hello-component>
+        <!-- КАСТОМНЫЕ ЭЛЕМЕНТЫ -->
+
+        <!-- модифицироавнная кнопка-->
+        <button id='werr' is="hello-button"></button>
+
+
+
+        <button id="create-btn">Create</button>
+        <button id="change-btn">Change Attribute</button>
+        <button id="remove-btn">Remove</button>
+
+
+
+        <script src="main.js"></script>
+    </body>
+</html>
