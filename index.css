@@ -20,7 +20,7 @@ ul {
 }
 
 #search::placeholder {
-    font-size: 16px;
+    font-size: 10px;
 }
 
 .hidden {
@@ -34,7 +34,7 @@ ul {
 .organization__item {
     display: flex;
     flex-direction: column;
-    font-size: 16px;
+    font-size: 10px;
 }
 
 .organization__search {
@@ -56,9 +56,24 @@ ul {
 }
 
 .organization__input {
-    width: 50%;
+    width: 100%;
     padding: 2px 4px;
-    font-size: 16px;
+    font-size: 10px;
+}
+
+@media (min-width: 576px) {
+    #search::placeholder {
+        font-size: 16px;
+    }
+
+    .organization__item {
+        font-size: 16px;
+    }
+
+    .organization__input {
+        width: 100%;
+        font-size: 16px;
+    }
 }
 
 .variant__list {
@@ -106,9 +121,51 @@ ul {
 .variant__description {
     display: flex;
     color: #777777;
-    font-size: 16px;
+    font-size: 10px;
 }
 
 .variant__inn {
     margin-right: 8px;
+}
+
+@media (min-width: 576px) {
+    #search::placeholder {
+        font-size: 12px;
+    }
+
+    .organization__item {
+        font-size: 12px;
+    }
+
+    .organization__input {
+        font-size: 12px;
+    }
+
+    .variant__description {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 768px) {
+    #search::placeholder {
+        font-size: 16px;
+    }
+
+    .organization__item {
+        font-size: 16px;
+    }
+
+    .organization__input {
+        font-size: 16px;
+    }
+
+    .variant__description {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .organization__input {
+        width: 50%;
+    }
 }
