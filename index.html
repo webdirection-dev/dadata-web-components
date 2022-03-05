@@ -1,43 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Web Components</title>
-    </head>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+            name="description"
+            content="Components"
+    />
+    <title>Web Components</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
     <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
 
-        <!-- ШАБЛОНЫ -->
-        <template>
-            <p id="nnn">Hello, World! (from template)</p>
-            <script src="test.js"></script>
-        </template>
+        <section class="organization">
+            <h1 class="organization__title">Информация о юридических лицах</h1>
 
-        <button id="add-button">Add Template</button>
+            <form class="organization__form" action="">
+                <ul class="organization__list">
+                    <li class="organization__item">
+                        <div class="organization__search">
+                            <label class="organization__label-search" for="search">Компания или ИП</label>
+                            <input
+                                    autofocus
+                                    type="search"
+                                    placeholder="Введите название, ИНН, ОГРН или адрес организации"
+                                    id="search"
+                                    class="organization__input"
+                            >
+                            <div class="variant__list hidden">
+                                <div class="variant__info">
+                                    <p class="variant__hint">Выберите вариант или продолжите ввод</p>
+                                    <a href="https://dadata.ru/suggestions/?utm_source=dadata&utm_medium=module&utm_campaign=suggestions-jquery">
+                                        <img class="variant__img" src="https://dadata.ru/static/i/dadata-logo.svg" alt="DaData.ru">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
 
-        <template id="header">
-            <h1>Header</h1>
+                    <li class="organization__item">
+                        <label class="organization__label" for="short-name">Краткое наименование</label>
+                        <input
+                                type="text"
+                                id="short-name"
+                                class="organization__input"
+                        >
+                    </li>
 
-            <template id="body">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque enim facere facilis iste magni nam neque odio quis reiciendis tenetur. Dolore facilis illo laudantium molestiae nesciunt nostrum praesentium quia, similique.
-            </template>
-        </template>
-        <!-- ШАБЛОНЫ -->
+                    <li class="organization__item">
+                        <label class="organization__label" for="full-name">Полное наименование</label>
+                        <input
+                                type="text"
+                                id="full-name"
+                                class="organization__input"
+                        >
+                    </li>
 
-        <!-- КАСТОМНЫЕ ЭЛЕМЕНТЫ -->
-        <hello-component></hello-component>
-        <!-- КАСТОМНЫЕ ЭЛЕМЕНТЫ -->
+                    <li class="organization__item">
+                        <label class="organization__label" for="inn">ИНН / КПП</label>
+                        <input
+                                type="text"
+                                id="inn"
+                                class="organization__input"
+                        >
+                    </li>
 
-        <!-- модифицироавнная кнопка-->
-        <button id='werr' is="hello-button"></button>
+                    <li class="organization__item">
+                        <label class="organization__label" for="address">Адрес</label>
+                        <input
+                                type="text"
+                                id="address"
+                                class="organization__input"
+                        >
+                    </li>
+                </ul>
+            </form>
+        </section>
 
-
-
-        <button id="create-btn">Create</button>
-        <button id="change-btn">Change Attribute</button>
-        <button id="remove-btn">Remove</button>
-
-
-
-        <script src="main.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
