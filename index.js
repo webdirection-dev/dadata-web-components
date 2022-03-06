@@ -35,6 +35,15 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    searchInput.addEventListener('keydown', async () => {
+        variantList.classList.add('hidden')
+    })
+
+    window.addEventListener('click', (event) => {
+        const {id} = event.target
+        if (id !== 'search') variantList.classList.add('hidden')
+    })
+
     async function getData(query) {
         try {
             const response = await fetch( url, {
@@ -62,9 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderVariantList() {
-        const legalType = document.createElement('div');
-        legalType.classList = 'organization__type'
-
+        const removeLegal = document.querySelector('.organization__type')
         const list = document.querySelectorAll('.variant__item')
         list.forEach(item => {
             item.remove()
@@ -94,7 +101,12 @@ window.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `
                 elem.addEventListener('click', (event) => {
+                    if (removeLegal !== null) removeLegal.remove()
+
+                    const legalType = document.createElement('div');
+                    legalType.classList = 'organization__type'
                     legalType.innerHTML = `<div>Организация (${data.type})</div>`
+
                     const list = document.querySelectorAll('.variant__item')
                     renderVariant(item)
                     searchInput.value = value
@@ -102,7 +114,6 @@ window.addEventListener('DOMContentLoaded', () => {
                         item.remove()
                     })
                     legal.append(legalType)
-                    variantList.classList.add('hidden')
                 })
 
                 variantList.append(elem)
