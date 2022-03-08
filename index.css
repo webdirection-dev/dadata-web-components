@@ -97,6 +97,10 @@ ul {
     background-color: #f7f7f7;
 }
 
+.variant__active {
+    background-color: #f7f7f7;
+}
+
 .variant__info {
     display: flex;
     justify-content: space-between;

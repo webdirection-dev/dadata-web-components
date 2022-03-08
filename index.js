@@ -4,6 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
     const token = "0942518e753e88745cd945cf0bd40269b0b9a937";
 
+    let count = -1
+    const arrForRender = []
+
     const searchInput = document.querySelector('#search')
     const shortNameInput = document.querySelector('#short-name')
     const fullNameInput = document.querySelector('#full-name')
@@ -23,6 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // строка поиска
     searchInput.addEventListener('input', async (event) => {
+        count = -1
         const {value} = event.target
         await getData(value)
 
@@ -36,21 +40,58 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    // Скрыть выпадающий список при пустом input
-    searchInput.addEventListener('keydown', async () => {
-        variantList.classList.add('hidden')
+    //навигация по выпадающему листу через клавиатуру
+    searchInput.addEventListener('keydown', (event) => {
+        const variantItems = document.querySelectorAll('.variant__item')
+        const {keyCode} = event
+
+        variantItems.forEach(item => {
+            item.classList.remove('variant__active')
+        })
+
+        //down
+        if (keyCode === 40) {
+            event.preventDefault()
+            if (variantItems.length > 0) {
+                count = count < 4 ? count += 1 : 0
+                variantItems[count].classList.add('variant__active')
+            }
+        }
+
+        //up
+        if (keyCode === 38) {
+            event.preventDefault()
+            if (variantItems.length > 0) {
+                count = count > 0 ? count -= 1 : 4
+                variantItems[count].classList.add('variant__active')
+            }
+        }
+
+        //escape
+        if (keyCode === 27) {
+            searchInput.value = ''
+            variantList.classList.add('hidden')
+        }
+
+        //enter
+        if (keyCode === 13) {
+            if (count >= 0) {
+                variantList.classList.add('hidden')
+                actionsForVariants(arrForRender[count])
+                count = 0
+            }
+        }
     })
 
-    // выбрать из вариантов
+    // скрыть список ко клику
     window.addEventListener('click', (event) => {
         const {id} = event.target
         if (id !== 'search') variantList.classList.add('hidden')
     })
 
+
     // основная логика
     function renderVariantList(valueInput) {
-        const arr = []
-        const removeLegal = document.querySelector('.organization__type')
         const list = document.querySelectorAll('.variant__item')
 
         // удалить предыдущие варианты
@@ -62,13 +103,13 @@ window.addEventListener('DOMContentLoaded', () => {
         if (daData.length > 0) {
             daData.forEach((item, index) => {
                 if (index < 5) {
-                    arr.push(item)
+                    arrForRender.push(item)
                 }
             })
         }
 
         // general
-        arr.forEach((item, index) => {
+        arrForRender.forEach((item, index) => {
             const {value, data} = item
 
             if (index < 5) {
@@ -83,24 +124,29 @@ window.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `
                 elem.addEventListener('click', (event) => {
-                    if (removeLegal !== null) removeLegal.remove()
-
-                    const legalType = document.createElement('div');
-                    legalType.classList = 'organization__type'
-                    legalType.innerHTML = `<div>Организация (${data.type})</div>`
-
-                    const list = document.querySelectorAll('.variant__item')
-                    renderVariant(item)
-                    searchInput.value = value
-                    list.forEach(item => {
-                        item.remove()
-                    })
-                    legal.append(legalType)
+                    actionsForVariants(item)
                 })
 
                 variantList.append(elem)
             }
         })
+    }
+
+    // навигация и клик по листу с вариантами
+    function actionsForVariants(item) {
+        const {value, data} = item
+        const removeLegal = document.querySelector('.organization__type')
+
+        const legalType = document.createElement('div');
+        if (removeLegal !== null) removeLegal.remove()
+
+        legalType.classList = 'organization__type'
+        legalType.innerHTML = `<div>Организация (${data.type})</div>`
+
+        searchInput.value = value
+        legal.append(legalType)
+
+        renderVariant(item)
     }
 
     // заполнить inputs выбранной информацией
