@@ -83,8 +83,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    //клик вне input
     window.addEventListener('click', (event) => {
         if (!wrap.contains(event.target)) variantList.classList.add('hidden')
+    })
+
+    //фокус на input
+    searchInput.addEventListener('focus', () => {
+        variantList.classList.remove('hidden')
     })
 
     // основная логика
