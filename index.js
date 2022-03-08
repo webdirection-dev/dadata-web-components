@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const fullNameInput = document.querySelector('#full-name')
     const innInput = document.querySelector('#inn')
     const addressInput = document.querySelector('#address')
+    const wrap = document.querySelector('#wrap')
     const variantList = document.querySelector('.variant__list')
     const legal = document.querySelector('.organization__search')
 
@@ -76,19 +77,15 @@ window.addEventListener('DOMContentLoaded', () => {
         //enter
         if (keyCode === 13) {
             if (count >= 0) {
-                variantList.classList.add('hidden')
                 actionsForVariants(arrForRender[count])
                 count = 0
             }
         }
     })
 
-    // скрыть список ко клику
     window.addEventListener('click', (event) => {
-        const {id} = event.target
-        if (id !== 'search') variantList.classList.add('hidden')
+        if (!wrap.contains(event.target)) variantList.classList.add('hidden')
     })
-
 
     // основная логика
     function renderVariantList(valueInput) {
@@ -134,6 +131,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // навигация и клик по листу с вариантами
     function actionsForVariants(item) {
+        variantList.classList.add('hidden')
         const {value, data} = item
         const removeLegal = document.querySelector('.organization__type')
 
