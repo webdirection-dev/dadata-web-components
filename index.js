@@ -74,6 +74,11 @@ window.addEventListener('DOMContentLoaded', () => {
             variantList.classList.add('hidden')
         }
 
+        //escape
+        if (keyCode === 9) {
+            variantList.classList.add('hidden')
+        }
+
         //enter
         if (keyCode === 13) {
             if (count >= 0) {
