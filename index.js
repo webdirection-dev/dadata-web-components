@@ -11,8 +11,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const addressInput = document.querySelector('#address')
     const variantList = document.querySelector('.variant__list')
     const legal = document.querySelector('.organization__search')
-    let daData = []
 
+    let daData = []
     if (daData.length === 0) {
         searchInput.value = ''
         shortNameInput.value = ''
@@ -21,12 +21,13 @@ window.addEventListener('DOMContentLoaded', () => {
         addressInput.value = ''
     }
 
+    // строка поиска
     searchInput.addEventListener('input', async (event) => {
         const {value} = event.target
         await getData(value)
 
         if (value !== '') {
-            renderVariantList()
+            renderVariantList(value)
             variantList.classList.remove('hidden')
         }
 
@@ -35,49 +36,29 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     })
 
+    // Скрыть выпадающий список при пустом input
     searchInput.addEventListener('keydown', async () => {
         variantList.classList.add('hidden')
     })
 
+    // выбрать из вариантов
     window.addEventListener('click', (event) => {
         const {id} = event.target
         if (id !== 'search') variantList.classList.add('hidden')
     })
 
-    async function getData(query) {
-        try {
-            const response = await fetch( url, {
-                method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                    "Authorization": "Token " + token
-                },
-                body: JSON.stringify({query: query})
-
-            });
-
-            if (!response.ok) {
-                throw new Error('ServerError!')
-            }
-
-            const data = await response.json();
-
-            daData = data.suggestions
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-
-    function renderVariantList() {
+    // основная логика
+    function renderVariantList(valueInput) {
+        const arr = []
         const removeLegal = document.querySelector('.organization__type')
         const list = document.querySelectorAll('.variant__item')
+
+        // удалить предыдущие варианты
         list.forEach(item => {
             item.remove()
         })
-        const arr = []
 
+        // выбрать 5 топовых варианта
         if (daData.length > 0) {
             daData.forEach((item, index) => {
                 if (index < 5) {
@@ -86,6 +67,7 @@ window.addEventListener('DOMContentLoaded', () => {
             })
         }
 
+        // general
         arr.forEach((item, index) => {
             const {value, data} = item
 
@@ -94,7 +76,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 elem.classList.add('variant__item')
 
                 elem.innerHTML = `
-                        <div class="variant__title">${value}</div>
+                        <div class="variant__title">${markLetters(value, valueInput)}</div>
                         <div class="variant__description">
                             <p class="variant__inn">${data.inn}</p>
                             <p class="variant__own">${data.address === null ? '' : data.address.value}</p>
@@ -121,11 +103,50 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+    // заполнить inputs выбранной информацией
     function renderVariant(item) {
         const {value, data} = item
         shortNameInput.value = value
         fullNameInput.value = data.name.full_with_opf
         innInput.value = `${data.inn} / ${data.kpp}`
         addressInput.value = data.address.value
+    }
+
+    //покрасить искомые символы в найденных словах
+    function markLetters(str, valueInput) {
+        const isIndexOf = str.toLowerCase().indexOf(valueInput)
+
+        return str.slice(0, isIndexOf) +
+            '<span class="variant__mark">' +
+            str.slice(isIndexOf, isIndexOf+valueInput.length) +
+            '</span>' +
+            str.slice(isIndexOf+valueInput.length)
+    }
+
+    // fetch
+    async function getData(query) {
+        try {
+            const response = await fetch( url, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Token " + token
+                },
+                body: JSON.stringify({query: query})
+
+            });
+
+            if (!response.ok) {
+                throw new Error('ServerError!')
+            }
+
+            const data = await response.json();
+
+            daData = data.suggestions
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 })
