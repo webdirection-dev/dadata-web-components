@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     //фокус на input
     searchInput.addEventListener('focus', () => {
-        variantList.classList.remove('hidden')
+        if (arrForRender.length > 0) variantList.classList.remove('hidden')
     })
 
     // основная логика
