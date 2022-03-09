@@ -1,11 +1,12 @@
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
+    // const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
     const token = "0942518e753e88745cd945cf0bd40269b0b9a937";
 
     let count = -1
-    const arrForRender = []
+    let arrForRender = []
 
     const searchInput = document.querySelector('#search')
     const shortNameInput = document.querySelector('#short-name')
@@ -100,6 +101,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // основная логика
     function renderVariantList(valueInput) {
+        arrForRender = []
+
         const list = document.querySelectorAll('.variant__item')
 
         // удалить предыдущие варианты
