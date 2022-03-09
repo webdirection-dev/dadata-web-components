@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
-
-    // const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
+    
     const url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party";
     const token = "0942518e753e88745cd945cf0bd40269b0b9a937";
 
