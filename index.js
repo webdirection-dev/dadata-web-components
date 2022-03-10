@@ -204,8 +204,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     async function getData(query) {
-        if (localStorage.getItem('city') === null) await getIP()
-        let city = localStorage.getItem('city')
+        // if (localStorage.getItem('city') === null) await getIP()
+        // let city = localStorage.getItem('city')
+        const city = 'Moscow'
         try {
             const response = await fetch( url, {
                 method: "POST",
