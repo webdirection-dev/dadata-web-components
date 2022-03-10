@@ -122,6 +122,10 @@ ul {
     padding: 3px;
 }
 
+.variant__title {
+    text-decoration-line: line-through;
+}
+
 .variant__description {
     display: flex;
     color: #777777;
