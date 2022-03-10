@@ -231,7 +231,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             if (city !== null) daData = filterOnCity
             else daData = data.suggestions
-            console.log(data.suggestions)
         } catch (error) {
             console.log(error.message)
         }
